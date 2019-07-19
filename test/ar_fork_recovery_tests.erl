@@ -19,7 +19,7 @@ missing_txs_fork_recovery_test() ->
 	ar_test_node:slave_gossip(off, SlaveNode),
 	TX1 = ar_tx:new(),
 	ar_test_node:slave_add_tx(SlaveNode, TX1),
-	timer:sleep(100),
+	timer:sleep(200),
 	%% Turn on gossip and mine a block.
 	ar_test_node:slave_gossip(on, SlaveNode),
 	?assertEqual([TX1], slave_call(ar_node, get_all_known_txs, [SlaveNode])),
@@ -32,6 +32,7 @@ missing_txs_fork_recovery_test() ->
 	ar_test_node:slave_gossip(off, SlaveNode),
 	TX2 = ar_tx:new(),
 	ar_test_node:slave_add_tx(SlaveNode, TX2),
+	timer:sleep(200),
 	%% Turn on gossip and mine a block.
 	ar_test_node:slave_gossip(on, SlaveNode),
 	?assertEqual([TX2], ar_rpc:call(slave, ar_node, get_all_known_txs, [SlaveNode], 5000)),
